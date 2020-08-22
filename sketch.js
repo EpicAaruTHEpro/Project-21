@@ -16,12 +16,11 @@ function setup() {
 function draw() {
   background(0,0,0);
   
-  if (wall.x - bullet.x < (bullet.width-wall.width) / 2) {
+  if (hasCollided(bullet, wall)) {
     bullet.velocityX=0;
     bullet.x = wall.x-20;
     var damage = 0.5*weight*speed*speed/(thickness*thickness*thickness);
-    console.log(damage);
-    console.log(thickness);
+    
     if (damage>=10) {
       bullet.shapeColor = color(255,0,0);
       //"Car Crashed hard RED LEVEL"
@@ -40,4 +39,13 @@ function draw() {
   }
 
   drawSprites();
+}
+
+function hasCollided(lbullet, lwall) {
+  bulletRightEdge = lbullet.x + lbullet.width;
+  wallLeftEdge = lwall.x;
+  if (bulletRightEdge>=wallLeftEdge) {
+    return true;
+  }
+  return false;
 }
